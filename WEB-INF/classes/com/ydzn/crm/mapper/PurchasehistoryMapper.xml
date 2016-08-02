@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ydzn.crm.mapper.PurchasehistoryMapper" >
+  <resultMap id="BaseResultMap" type="com.ydzn.crm.po.Purchasehistory" >
+    <id column="RecordID" property="recordid" jdbcType="INTEGER" />
+    <result column="CustomID" property="customid" jdbcType="INTEGER" />
+    <result column="RecordTime" property="recordtime" jdbcType="TIME" />
+    <result column="RecordMoney" property="recordmoney" jdbcType="REAL" />
+    <result column="Remark" property="remark" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    RecordID, CustomID, RecordTime, RecordMoney, Remark
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ydzn.crm.po.PurchasehistoryExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from purchasehistory
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from purchasehistory
+    where RecordID = #{recordid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from purchasehistory
+    where RecordID = #{recordid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ydzn.crm.po.PurchasehistoryExample" >
+    delete from purchasehistory
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ydzn.crm.po.Purchasehistory" >
+    insert into purchasehistory (RecordID, CustomID, RecordTime, 
+      RecordMoney, Remark)
+    values (#{recordid,jdbcType=INTEGER}, #{customid,jdbcType=INTEGER}, #{recordtime,jdbcType=TIME}, 
+      #{recordmoney,jdbcType=REAL}, #{remark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ydzn.crm.po.Purchasehistory" >
+    insert into purchasehistory
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="recordid != null" >
+        RecordID,
+      </if>
+      <if test="customid != null" >
+        CustomID,
+      </if>
+      <if test="recordtime != null" >
+        RecordTime,
+      </if>
+      <if test="recordmoney != null" >
+        RecordMoney,
+      </if>
+      <if test="remark != null" >
+        Remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="recordid != null" >
+        #{recordid,jdbcType=INTEGER},
+      </if>
+      <if test="customid != null" >
+        #{customid,jdbcType=INTEGER},
+      </if>
+      <if test="recordtime != null" >
+        #{recordtime,jdbcType=TIME},
+      </if>
+      <if test="recordmoney != null" >
+        #{recordmoney,jdbcType=REAL},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ydzn.crm.po.PurchasehistoryExample" resultType="java.lang.Integer" >
+    select count(*) from purchasehistory
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update purchasehistory
+    <set >
+      <if test="record.recordid != null" >
+        RecordID = #{record.recordid,jdbcType=INTEGER},
+      </if>
+      <if test="record.customid != null" >
+        CustomID = #{record.customid,jdbcType=INTEGER},
+      </if>
+      <if test="record.recordtime != null" >
+        RecordTime = #{record.recordtime,jdbcType=TIME},
+      </if>
+      <if test="record.recordmoney != null" >
+        RecordMoney = #{record.recordmoney,jdbcType=REAL},
+      </if>
+      <if test="record.remark != null" >
+        Remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update purchasehistory
+    set RecordID = #{record.recordid,jdbcType=INTEGER},
+      CustomID = #{record.customid,jdbcType=INTEGER},
+      RecordTime = #{record.recordtime,jdbcType=TIME},
+      RecordMoney = #{record.recordmoney,jdbcType=REAL},
+      Remark = #{record.remark,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ydzn.crm.po.Purchasehistory" >
+    update purchasehistory
+    <set >
+      <if test="customid != null" >
+        CustomID = #{customid,jdbcType=INTEGER},
+      </if>
+      <if test="recordtime != null" >
+        RecordTime = #{recordtime,jdbcType=TIME},
+      </if>
+      <if test="recordmoney != null" >
+        RecordMoney = #{recordmoney,jdbcType=REAL},
+      </if>
+      <if test="remark != null" >
+        Remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where RecordID = #{recordid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ydzn.crm.po.Purchasehistory" >
+    update purchasehistory
+    set CustomID = #{customid,jdbcType=INTEGER},
+      RecordTime = #{recordtime,jdbcType=TIME},
+      RecordMoney = #{recordmoney,jdbcType=REAL},
+      Remark = #{remark,jdbcType=VARCHAR}
+    where RecordID = #{recordid,jdbcType=INTEGER}
+  </update>
+</mapper>

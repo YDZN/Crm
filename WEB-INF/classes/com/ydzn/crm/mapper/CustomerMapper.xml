@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ydzn.crm.mapper.CustomerMapper" >
+  <resultMap id="BaseResultMap" type="com.ydzn.crm.po.Customer" >
+    <id column="CustomID" property="customid" jdbcType="INTEGER" />
+    <result column="TelephoneNumber" property="telephonenumber" jdbcType="CHAR" />
+    <result column="CustomName" property="customname" jdbcType="VARCHAR" />
+    <result column="BonusPoint" property="bonuspoint" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    CustomID, TelephoneNumber, CustomName, BonusPoint
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ydzn.crm.po.CustomerExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from customer
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from customer
+    where CustomID = #{customid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from customer
+    where CustomID = #{customid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ydzn.crm.po.CustomerExample" >
+    delete from customer
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ydzn.crm.po.Customer" >
+    insert into customer (CustomID, TelephoneNumber, CustomName, 
+      BonusPoint)
+    values (#{customid,jdbcType=INTEGER}, #{telephonenumber,jdbcType=CHAR}, #{customname,jdbcType=VARCHAR}, 
+      #{bonuspoint,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ydzn.crm.po.Customer" >
+    insert into customer
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="customid != null" >
+        CustomID,
+      </if>
+      <if test="telephonenumber != null" >
+        TelephoneNumber,
+      </if>
+      <if test="customname != null" >
+        CustomName,
+      </if>
+      <if test="bonuspoint != null" >
+        BonusPoint,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="customid != null" >
+        #{customid,jdbcType=INTEGER},
+      </if>
+      <if test="telephonenumber != null" >
+        #{telephonenumber,jdbcType=CHAR},
+      </if>
+      <if test="customname != null" >
+        #{customname,jdbcType=VARCHAR},
+      </if>
+      <if test="bonuspoint != null" >
+        #{bonuspoint,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ydzn.crm.po.CustomerExample" resultType="java.lang.Integer" >
+    select count(*) from customer
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update customer
+    <set >
+      <if test="record.customid != null" >
+        CustomID = #{record.customid,jdbcType=INTEGER},
+      </if>
+      <if test="record.telephonenumber != null" >
+        TelephoneNumber = #{record.telephonenumber,jdbcType=CHAR},
+      </if>
+      <if test="record.customname != null" >
+        CustomName = #{record.customname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bonuspoint != null" >
+        BonusPoint = #{record.bonuspoint,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update customer
+    set CustomID = #{record.customid,jdbcType=INTEGER},
+      TelephoneNumber = #{record.telephonenumber,jdbcType=CHAR},
+      CustomName = #{record.customname,jdbcType=VARCHAR},
+      BonusPoint = #{record.bonuspoint,jdbcType=BIGINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ydzn.crm.po.Customer" >
+    update customer
+    <set >
+      <if test="telephonenumber != null" >
+        TelephoneNumber = #{telephonenumber,jdbcType=CHAR},
+      </if>
+      <if test="customname != null" >
+        CustomName = #{customname,jdbcType=VARCHAR},
+      </if>
+      <if test="bonuspoint != null" >
+        BonusPoint = #{bonuspoint,jdbcType=BIGINT},
+      </if>
+    </set>
+    where CustomID = #{customid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ydzn.crm.po.Customer" >
+    update customer
+    set TelephoneNumber = #{telephonenumber,jdbcType=CHAR},
+      CustomName = #{customname,jdbcType=VARCHAR},
+      BonusPoint = #{bonuspoint,jdbcType=BIGINT}
+    where CustomID = #{customid,jdbcType=INTEGER}
+  </update>
+</mapper>
