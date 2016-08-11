@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ydzn.crm.mapper.CustomerExtendMapper" >
+
+    <!--按手机号更新顾客积分-->
+    <update id="updateCustomerBonusPoint" parameterType="hashmap">
+        update customer set BonusPoint = #{bonusPoint} where TelephoneNumber = #{telephoneNumber}
+    </update>
+
+    <!--查看会员积分榜-->
+    <select id="getCustomersCreditByOrder" resultType="customer">
+        select * from customer order by BonusPoint desc
+    </select>
+
+    <!--查看已发布活动详情-->
+    <select id="seeAcitvityInf" resultType="activity">
+        select * from activity where AcitvityState=1;
+    </select>
+</mapper>

@@ -5,9 +5,10 @@
     <id column="ActivityID" property="activityid" jdbcType="INTEGER" />
     <result column="ActivityName" property="activityname" jdbcType="VARCHAR" />
     <result column="AccountID" property="accountid" jdbcType="INTEGER" />
-    <result column="ActivityStartTime" property="activitystarttime" jdbcType="DATE" />
-    <result column="ActivityCutTime" property="activitycuttime" jdbcType="TIME" />
+    <result column="ActivityStartTime" property="activitystarttime" jdbcType="TIMESTAMP" />
+    <result column="ActivityCutTime" property="activitycuttime" jdbcType="TIMESTAMP" />
     <result column="ActivityDetail" property="activitydetail" jdbcType="VARCHAR" />
+    <result column="AcitvityState" property="acitvitystate" jdbcType="BIT" />
   </resultMap>
   <resultMap id="ResultMapWithBLOBs" type="com.ydzn.crm.po.Activity" extends="BaseResultMap" >
     <result column="ActivityPic" property="activitypic" jdbcType="LONGVARBINARY" />
@@ -71,7 +72,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    ActivityID, ActivityName, AccountID, ActivityStartTime, ActivityCutTime, ActivityDetail
+    ActivityID, ActivityName, AccountID, ActivityStartTime, ActivityCutTime, ActivityDetail, 
+    AcitvityState
   </sql>
   <sql id="Blob_Column_List" >
     ActivityPic
@@ -126,11 +128,13 @@
   </delete>
   <insert id="insert" parameterType="com.ydzn.crm.po.Activity" >
     insert into activity (ActivityID, ActivityName, AccountID, 
-      ActivityStartTime, ActivityCutTime, ActivityDetail, 
-      ActivityPic)
+      ActivityStartTime, ActivityCutTime, 
+      ActivityDetail, AcitvityState, ActivityPic
+      )
     values (#{activityid,jdbcType=INTEGER}, #{activityname,jdbcType=VARCHAR}, #{accountid,jdbcType=INTEGER}, 
-      #{activitystarttime,jdbcType=DATE}, #{activitycuttime,jdbcType=TIME}, #{activitydetail,jdbcType=VARCHAR}, 
-      #{activitypic,jdbcType=LONGVARBINARY})
+      #{activitystarttime,jdbcType=TIMESTAMP}, #{activitycuttime,jdbcType=TIMESTAMP}, 
+      #{activitydetail,jdbcType=VARCHAR}, #{acitvitystate,jdbcType=BIT}, #{activitypic,jdbcType=LONGVARBINARY}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.ydzn.crm.po.Activity" >
     insert into activity
@@ -153,6 +157,9 @@
       <if test="activitydetail != null" >
         ActivityDetail,
       </if>
+      <if test="acitvitystate != null" >
+        AcitvityState,
+      </if>
       <if test="activitypic != null" >
         ActivityPic,
       </if>
@@ -168,13 +175,16 @@
         #{accountid,jdbcType=INTEGER},
       </if>
       <if test="activitystarttime != null" >
-        #{activitystarttime,jdbcType=DATE},
+        #{activitystarttime,jdbcType=TIMESTAMP},
       </if>
       <if test="activitycuttime != null" >
-        #{activitycuttime,jdbcType=TIME},
+        #{activitycuttime,jdbcType=TIMESTAMP},
       </if>
       <if test="activitydetail != null" >
         #{activitydetail,jdbcType=VARCHAR},
+      </if>
+      <if test="acitvitystate != null" >
+        #{acitvitystate,jdbcType=BIT},
       </if>
       <if test="activitypic != null" >
         #{activitypic,jdbcType=LONGVARBINARY},
@@ -200,13 +210,16 @@
         AccountID = #{record.accountid,jdbcType=INTEGER},
       </if>
       <if test="record.activitystarttime != null" >
-        ActivityStartTime = #{record.activitystarttime,jdbcType=DATE},
+        ActivityStartTime = #{record.activitystarttime,jdbcType=TIMESTAMP},
       </if>
       <if test="record.activitycuttime != null" >
-        ActivityCutTime = #{record.activitycuttime,jdbcType=TIME},
+        ActivityCutTime = #{record.activitycuttime,jdbcType=TIMESTAMP},
       </if>
       <if test="record.activitydetail != null" >
         ActivityDetail = #{record.activitydetail,jdbcType=VARCHAR},
+      </if>
+      <if test="record.acitvitystate != null" >
+        AcitvityState = #{record.acitvitystate,jdbcType=BIT},
       </if>
       <if test="record.activitypic != null" >
         ActivityPic = #{record.activitypic,jdbcType=LONGVARBINARY},
@@ -221,9 +234,10 @@
     set ActivityID = #{record.activityid,jdbcType=INTEGER},
       ActivityName = #{record.activityname,jdbcType=VARCHAR},
       AccountID = #{record.accountid,jdbcType=INTEGER},
-      ActivityStartTime = #{record.activitystarttime,jdbcType=DATE},
-      ActivityCutTime = #{record.activitycuttime,jdbcType=TIME},
+      ActivityStartTime = #{record.activitystarttime,jdbcType=TIMESTAMP},
+      ActivityCutTime = #{record.activitycuttime,jdbcType=TIMESTAMP},
       ActivityDetail = #{record.activitydetail,jdbcType=VARCHAR},
+      AcitvityState = #{record.acitvitystate,jdbcType=BIT},
       ActivityPic = #{record.activitypic,jdbcType=LONGVARBINARY}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -234,9 +248,10 @@
     set ActivityID = #{record.activityid,jdbcType=INTEGER},
       ActivityName = #{record.activityname,jdbcType=VARCHAR},
       AccountID = #{record.accountid,jdbcType=INTEGER},
-      ActivityStartTime = #{record.activitystarttime,jdbcType=DATE},
-      ActivityCutTime = #{record.activitycuttime,jdbcType=TIME},
-      ActivityDetail = #{record.activitydetail,jdbcType=VARCHAR}
+      ActivityStartTime = #{record.activitystarttime,jdbcType=TIMESTAMP},
+      ActivityCutTime = #{record.activitycuttime,jdbcType=TIMESTAMP},
+      ActivityDetail = #{record.activitydetail,jdbcType=VARCHAR},
+      AcitvityState = #{record.acitvitystate,jdbcType=BIT}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -251,13 +266,16 @@
         AccountID = #{accountid,jdbcType=INTEGER},
       </if>
       <if test="activitystarttime != null" >
-        ActivityStartTime = #{activitystarttime,jdbcType=DATE},
+        ActivityStartTime = #{activitystarttime,jdbcType=TIMESTAMP},
       </if>
       <if test="activitycuttime != null" >
-        ActivityCutTime = #{activitycuttime,jdbcType=TIME},
+        ActivityCutTime = #{activitycuttime,jdbcType=TIMESTAMP},
       </if>
       <if test="activitydetail != null" >
         ActivityDetail = #{activitydetail,jdbcType=VARCHAR},
+      </if>
+      <if test="acitvitystate != null" >
+        AcitvityState = #{acitvitystate,jdbcType=BIT},
       </if>
       <if test="activitypic != null" >
         ActivityPic = #{activitypic,jdbcType=LONGVARBINARY},
@@ -269,9 +287,10 @@
     update activity
     set ActivityName = #{activityname,jdbcType=VARCHAR},
       AccountID = #{accountid,jdbcType=INTEGER},
-      ActivityStartTime = #{activitystarttime,jdbcType=DATE},
-      ActivityCutTime = #{activitycuttime,jdbcType=TIME},
+      ActivityStartTime = #{activitystarttime,jdbcType=TIMESTAMP},
+      ActivityCutTime = #{activitycuttime,jdbcType=TIMESTAMP},
       ActivityDetail = #{activitydetail,jdbcType=VARCHAR},
+      AcitvityState = #{acitvitystate,jdbcType=BIT},
       ActivityPic = #{activitypic,jdbcType=LONGVARBINARY}
     where ActivityID = #{activityid,jdbcType=INTEGER}
   </update>
@@ -279,9 +298,10 @@
     update activity
     set ActivityName = #{activityname,jdbcType=VARCHAR},
       AccountID = #{accountid,jdbcType=INTEGER},
-      ActivityStartTime = #{activitystarttime,jdbcType=DATE},
-      ActivityCutTime = #{activitycuttime,jdbcType=TIME},
-      ActivityDetail = #{activitydetail,jdbcType=VARCHAR}
+      ActivityStartTime = #{activitystarttime,jdbcType=TIMESTAMP},
+      ActivityCutTime = #{activitycuttime,jdbcType=TIMESTAMP},
+      ActivityDetail = #{activitydetail,jdbcType=VARCHAR},
+      AcitvityState = #{acitvitystate,jdbcType=BIT}
     where ActivityID = #{activityid,jdbcType=INTEGER}
   </update>
 </mapper>

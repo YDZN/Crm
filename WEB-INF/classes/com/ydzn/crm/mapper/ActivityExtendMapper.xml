@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ydzn.crm.mapper.ActivityExtendMapper">
+
+    <!--更新活动状态-->
+    <update id="updateAcitvityState" parameterType="hashmap">
+        update activity set AcitvityState=#{activityState} where ActivityID=#{activityID}
+    </update>
+
+    <!--新增已编辑活动-->
+    <insert id="insertActivity" parameterType="activity">
+        insert into activity(ActivityName,AccountID,ActivityStartTime,ActivityCutTime,ActivityDetail,ActivityPic,ActivityState)
+         values(#{activityname},#{accountid},#{activitystarttime},#{activitycuttime},#{activitydetail},#{activitypic},#{activitystate})
+    </insert>
+</mapper>

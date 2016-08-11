@@ -7,7 +7,7 @@
 <title>系统登陆</title>
 </head>
 <body>
-<form action="${pageContext.request.contextPath }/Crm_system/validateShopowner.action" method="post">
+<form action="${pageContext.request.contextPath }/validateShopowner.action" method="post">
 用户账号：<input type="text" name="AccountUser" /><br/>
 用户密码 ：<input type="password" name="AccountPwd" /><br/>
 <input type="submit" value="登陆"/>

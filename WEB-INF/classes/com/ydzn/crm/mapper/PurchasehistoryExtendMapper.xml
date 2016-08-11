@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ydzn.crm.mapper.PurchasehistoryExtendMapper">
+
+    <!--插入消费记录-->
+    <insert id="insert" parameterType="purchasehistory">
+        insert into purchasehistory (CustomID,RecordTime,RecordMoney,Remark)
+        values (#{customid}, #{recordtime}, #{recordmoney}, #{remark})
+    </insert>
+
+    <!--获取最后一次自增ID-->
+    <select id="selectLastAutoCrement" resultType="int">
+        SELECT LAST_INSERT_ID()
+    </select>
+
+    <!--获取日销售额（默认当前时间日期）-->
+    <select id="getDailySales" resultType="int">
+        select sum(RecordMoney) from purchasehistory where DATE_FORMAT(RecordTime, '%Y-%m-%d') = current_date()
+    </select>
+
+    <!--获取月销售额-->
+    <select id="getMonthlySales" resultType="int">
+        select sum(RecordMoney) from purchasehistory where DATE_FORMAT(RecordTime, '%Y-%m') = DATE_FORMAT(current_date(), '%Y-%m')
+    </select>
+
+	<!--获取年销售额-->
+    <select id="getYearlySales" resultType="int">
+        select sum(RecordMoney) from purchasehistory where DATE_FORMAT(RecordTime, '%Y') = year(current_date())
+    </select>
+
+
+
+</mapper>

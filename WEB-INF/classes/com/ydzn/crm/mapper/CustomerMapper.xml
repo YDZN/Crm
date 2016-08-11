@@ -5,7 +5,10 @@
     <id column="CustomID" property="customid" jdbcType="INTEGER" />
     <result column="TelephoneNumber" property="telephonenumber" jdbcType="CHAR" />
     <result column="CustomName" property="customname" jdbcType="VARCHAR" />
-    <result column="BonusPoint" property="bonuspoint" jdbcType="BIGINT" />
+    <result column="BonusPoint" property="bonuspoint" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.ydzn.crm.po.Customer" extends="BaseResultMap" >
+    <result column="CustomPic" property="custompic" jdbcType="LONGVARBINARY" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -68,6 +71,25 @@
   <sql id="Base_Column_List" >
     CustomID, TelephoneNumber, CustomName, BonusPoint
   </sql>
+  <sql id="Blob_Column_List" >
+    CustomPic
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.ydzn.crm.po.CustomerExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from customer
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ydzn.crm.po.CustomerExample" >
     select
     <if test="distinct" >
@@ -82,9 +104,11 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
     from customer
     where CustomID = #{customid,jdbcType=INTEGER}
   </select>
@@ -100,9 +124,9 @@
   </delete>
   <insert id="insert" parameterType="com.ydzn.crm.po.Customer" >
     insert into customer (CustomID, TelephoneNumber, CustomName, 
-      BonusPoint)
+      BonusPoint, CustomPic)
     values (#{customid,jdbcType=INTEGER}, #{telephonenumber,jdbcType=CHAR}, #{customname,jdbcType=VARCHAR}, 
-      #{bonuspoint,jdbcType=BIGINT})
+      #{bonuspoint,jdbcType=INTEGER}, #{custompic,jdbcType=LONGVARBINARY})
   </insert>
   <insert id="insertSelective" parameterType="com.ydzn.crm.po.Customer" >
     insert into customer
@@ -119,6 +143,9 @@
       <if test="bonuspoint != null" >
         BonusPoint,
       </if>
+      <if test="custompic != null" >
+        CustomPic,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="customid != null" >
@@ -131,7 +158,10 @@
         #{customname,jdbcType=VARCHAR},
       </if>
       <if test="bonuspoint != null" >
-        #{bonuspoint,jdbcType=BIGINT},
+        #{bonuspoint,jdbcType=INTEGER},
+      </if>
+      <if test="custompic != null" >
+        #{custompic,jdbcType=LONGVARBINARY},
       </if>
     </trim>
   </insert>
@@ -154,9 +184,23 @@
         CustomName = #{record.customname,jdbcType=VARCHAR},
       </if>
       <if test="record.bonuspoint != null" >
-        BonusPoint = #{record.bonuspoint,jdbcType=BIGINT},
+        BonusPoint = #{record.bonuspoint,jdbcType=INTEGER},
+      </if>
+      <if test="record.custompic != null" >
+        CustomPic = #{record.custompic,jdbcType=LONGVARBINARY},
       </if>
     </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update customer
+    set CustomID = #{record.customid,jdbcType=INTEGER},
+      TelephoneNumber = #{record.telephonenumber,jdbcType=CHAR},
+      CustomName = #{record.customname,jdbcType=VARCHAR},
+      BonusPoint = #{record.bonuspoint,jdbcType=INTEGER},
+      CustomPic = #{record.custompic,jdbcType=LONGVARBINARY}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -166,7 +210,7 @@
     set CustomID = #{record.customid,jdbcType=INTEGER},
       TelephoneNumber = #{record.telephonenumber,jdbcType=CHAR},
       CustomName = #{record.customname,jdbcType=VARCHAR},
-      BonusPoint = #{record.bonuspoint,jdbcType=BIGINT}
+      BonusPoint = #{record.bonuspoint,jdbcType=INTEGER}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -181,16 +225,27 @@
         CustomName = #{customname,jdbcType=VARCHAR},
       </if>
       <if test="bonuspoint != null" >
-        BonusPoint = #{bonuspoint,jdbcType=BIGINT},
+        BonusPoint = #{bonuspoint,jdbcType=INTEGER},
+      </if>
+      <if test="custompic != null" >
+        CustomPic = #{custompic,jdbcType=LONGVARBINARY},
       </if>
     </set>
+    where CustomID = #{customid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.ydzn.crm.po.Customer" >
+    update customer
+    set TelephoneNumber = #{telephonenumber,jdbcType=CHAR},
+      CustomName = #{customname,jdbcType=VARCHAR},
+      BonusPoint = #{bonuspoint,jdbcType=INTEGER},
+      CustomPic = #{custompic,jdbcType=LONGVARBINARY}
     where CustomID = #{customid,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.ydzn.crm.po.Customer" >
     update customer
     set TelephoneNumber = #{telephonenumber,jdbcType=CHAR},
       CustomName = #{customname,jdbcType=VARCHAR},
-      BonusPoint = #{bonuspoint,jdbcType=BIGINT}
+      BonusPoint = #{bonuspoint,jdbcType=INTEGER}
     where CustomID = #{customid,jdbcType=INTEGER}
   </update>
 </mapper>
