@@ -14,6 +14,16 @@
 
     <!--查看已发布活动详情-->
     <select id="seeAcitvityInf" resultType="activity">
-        select * from activity where AcitvityState=1;
+        select * from activity where ActivityState=1;
+    </select>
+
+    <!--查看指定会员消费明细-->
+    <select id="getCustomerDetail" parameterType="int" resultType="purchasehistory">
+        select * from purchasehistory where CustomID=#{customID};
+    </select>
+
+    <!--查看指定会员消费总额-->
+    <select id="getCustomerExpenditure" parameterType="int" resultType="int">
+        select sum(RecordMoney) from purchasehistory where CustomID = #{customID};
     </select>
 </mapper>

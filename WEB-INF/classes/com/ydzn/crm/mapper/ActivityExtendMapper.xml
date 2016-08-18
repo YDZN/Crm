@@ -4,7 +4,14 @@
 
     <!--更新活动状态-->
     <update id="updateAcitvityState" parameterType="hashmap">
-        update activity set AcitvityState=#{activityState} where ActivityID=#{activityID}
+        update activity set ActivityState=#{activityState} where ActivityID=#{activityID}
+    </update>
+
+    <!--更新活动信息-->
+    <update id="updateActivityInfo" parameterType="activity">
+        update activity  set
+          ActivityName=#{activityname},ActivityStartTime=#{activitystarttime},ActivityCutTime=#{activitycuttime},ActivityDetail=#{activitydetail}
+          where ActivityID=#{activityid}
     </update>
 
     <!--新增已编辑活动-->

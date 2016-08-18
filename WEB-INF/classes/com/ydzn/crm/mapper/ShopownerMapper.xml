@@ -6,8 +6,8 @@
     <result column="AccountName" property="accountname" jdbcType="VARCHAR" />
     <result column="AccountPwd" property="accountpwd" jdbcType="VARCHAR" />
     <result column="AccountAddress" property="accountaddress" jdbcType="VARCHAR" />
-    <result column="OpeningTime" property="openingtime" jdbcType="TIME" />
-    <result column="ClosingTime" property="closingtime" jdbcType="TIME" />
+    <result column="OpeningTime" property="openingtime" jdbcType="VARCHAR" />
+    <result column="ClosingTime" property="closingtime" jdbcType="VARCHAR" />
     <result column="AccountDetail" property="accountdetail" jdbcType="VARCHAR" />
   </resultMap>
   <resultMap id="ResultMapWithBLOBs" type="com.ydzn.crm.po.Shopowner" extends="BaseResultMap" >
@@ -130,7 +130,7 @@
       AccountAddress, OpeningTime, ClosingTime, 
       AccountDetail, AccountPic)
     values (#{accountid,jdbcType=INTEGER}, #{accountname,jdbcType=VARCHAR}, #{accountpwd,jdbcType=VARCHAR}, 
-      #{accountaddress,jdbcType=VARCHAR}, #{openingtime,jdbcType=TIME}, #{closingtime,jdbcType=TIME}, 
+      #{accountaddress,jdbcType=VARCHAR}, #{openingtime,jdbcType=VARCHAR}, #{closingtime,jdbcType=VARCHAR}, 
       #{accountdetail,jdbcType=VARCHAR}, #{accountpic,jdbcType=LONGVARBINARY})
   </insert>
   <insert id="insertSelective" parameterType="com.ydzn.crm.po.Shopowner" >
@@ -175,10 +175,10 @@
         #{accountaddress,jdbcType=VARCHAR},
       </if>
       <if test="openingtime != null" >
-        #{openingtime,jdbcType=TIME},
+        #{openingtime,jdbcType=VARCHAR},
       </if>
       <if test="closingtime != null" >
-        #{closingtime,jdbcType=TIME},
+        #{closingtime,jdbcType=VARCHAR},
       </if>
       <if test="accountdetail != null" >
         #{accountdetail,jdbcType=VARCHAR},
@@ -210,10 +210,10 @@
         AccountAddress = #{record.accountaddress,jdbcType=VARCHAR},
       </if>
       <if test="record.openingtime != null" >
-        OpeningTime = #{record.openingtime,jdbcType=TIME},
+        OpeningTime = #{record.openingtime,jdbcType=VARCHAR},
       </if>
       <if test="record.closingtime != null" >
-        ClosingTime = #{record.closingtime,jdbcType=TIME},
+        ClosingTime = #{record.closingtime,jdbcType=VARCHAR},
       </if>
       <if test="record.accountdetail != null" >
         AccountDetail = #{record.accountdetail,jdbcType=VARCHAR},
@@ -232,8 +232,8 @@
       AccountName = #{record.accountname,jdbcType=VARCHAR},
       AccountPwd = #{record.accountpwd,jdbcType=VARCHAR},
       AccountAddress = #{record.accountaddress,jdbcType=VARCHAR},
-      OpeningTime = #{record.openingtime,jdbcType=TIME},
-      ClosingTime = #{record.closingtime,jdbcType=TIME},
+      OpeningTime = #{record.openingtime,jdbcType=VARCHAR},
+      ClosingTime = #{record.closingtime,jdbcType=VARCHAR},
       AccountDetail = #{record.accountdetail,jdbcType=VARCHAR},
       AccountPic = #{record.accountpic,jdbcType=LONGVARBINARY}
     <if test="_parameter != null" >
@@ -246,8 +246,8 @@
       AccountName = #{record.accountname,jdbcType=VARCHAR},
       AccountPwd = #{record.accountpwd,jdbcType=VARCHAR},
       AccountAddress = #{record.accountaddress,jdbcType=VARCHAR},
-      OpeningTime = #{record.openingtime,jdbcType=TIME},
-      ClosingTime = #{record.closingtime,jdbcType=TIME},
+      OpeningTime = #{record.openingtime,jdbcType=VARCHAR},
+      ClosingTime = #{record.closingtime,jdbcType=VARCHAR},
       AccountDetail = #{record.accountdetail,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -266,10 +266,10 @@
         AccountAddress = #{accountaddress,jdbcType=VARCHAR},
       </if>
       <if test="openingtime != null" >
-        OpeningTime = #{openingtime,jdbcType=TIME},
+        OpeningTime = #{openingtime,jdbcType=VARCHAR},
       </if>
       <if test="closingtime != null" >
-        ClosingTime = #{closingtime,jdbcType=TIME},
+        ClosingTime = #{closingtime,jdbcType=VARCHAR},
       </if>
       <if test="accountdetail != null" >
         AccountDetail = #{accountdetail,jdbcType=VARCHAR},
@@ -285,8 +285,8 @@
     set AccountName = #{accountname,jdbcType=VARCHAR},
       AccountPwd = #{accountpwd,jdbcType=VARCHAR},
       AccountAddress = #{accountaddress,jdbcType=VARCHAR},
-      OpeningTime = #{openingtime,jdbcType=TIME},
-      ClosingTime = #{closingtime,jdbcType=TIME},
+      OpeningTime = #{openingtime,jdbcType=VARCHAR},
+      ClosingTime = #{closingtime,jdbcType=VARCHAR},
       AccountDetail = #{accountdetail,jdbcType=VARCHAR},
       AccountPic = #{accountpic,jdbcType=LONGVARBINARY}
     where AccountID = #{accountid,jdbcType=INTEGER}
@@ -296,8 +296,8 @@
     set AccountName = #{accountname,jdbcType=VARCHAR},
       AccountPwd = #{accountpwd,jdbcType=VARCHAR},
       AccountAddress = #{accountaddress,jdbcType=VARCHAR},
-      OpeningTime = #{openingtime,jdbcType=TIME},
-      ClosingTime = #{closingtime,jdbcType=TIME},
+      OpeningTime = #{openingtime,jdbcType=VARCHAR},
+      ClosingTime = #{closingtime,jdbcType=VARCHAR},
       AccountDetail = #{accountdetail,jdbcType=VARCHAR}
     where AccountID = #{accountid,jdbcType=INTEGER}
   </update>

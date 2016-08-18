@@ -6,6 +6,7 @@
     <result column="GoodsName" property="goodsname" jdbcType="VARCHAR" />
     <result column="GoodsMoney" property="goodsmoney" jdbcType="REAL" />
     <result column="GoodsStorage" property="goodsstorage" jdbcType="INTEGER" />
+    <result column="GoodsDetail" property="goodsdetail" jdbcType="VARCHAR" />
   </resultMap>
   <resultMap id="ResultMapWithBLOBs" type="com.ydzn.crm.po.Goods" extends="BaseResultMap" >
     <result column="GoodsPic" property="goodspic" jdbcType="LONGVARBINARY" />
@@ -69,7 +70,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    GoodsID, GoodsName, GoodsMoney, GoodsStorage
+    GoodsID, GoodsName, GoodsMoney, GoodsStorage, GoodsDetail
   </sql>
   <sql id="Blob_Column_List" >
     GoodsPic
@@ -124,9 +125,11 @@
   </delete>
   <insert id="insert" parameterType="com.ydzn.crm.po.Goods" >
     insert into goods (GoodsID, GoodsName, GoodsMoney, 
-      GoodsStorage, GoodsPic)
+      GoodsStorage, GoodsDetail, GoodsPic
+      )
     values (#{goodsid,jdbcType=INTEGER}, #{goodsname,jdbcType=VARCHAR}, #{goodsmoney,jdbcType=REAL}, 
-      #{goodsstorage,jdbcType=INTEGER}, #{goodspic,jdbcType=LONGVARBINARY})
+      #{goodsstorage,jdbcType=INTEGER}, #{goodsdetail,jdbcType=VARCHAR}, #{goodspic,jdbcType=LONGVARBINARY}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.ydzn.crm.po.Goods" >
     insert into goods
@@ -142,6 +145,9 @@
       </if>
       <if test="goodsstorage != null" >
         GoodsStorage,
+      </if>
+      <if test="goodsdetail != null" >
+        GoodsDetail,
       </if>
       <if test="goodspic != null" >
         GoodsPic,
@@ -159,6 +165,9 @@
       </if>
       <if test="goodsstorage != null" >
         #{goodsstorage,jdbcType=INTEGER},
+      </if>
+      <if test="goodsdetail != null" >
+        #{goodsdetail,jdbcType=VARCHAR},
       </if>
       <if test="goodspic != null" >
         #{goodspic,jdbcType=LONGVARBINARY},
@@ -186,6 +195,9 @@
       <if test="record.goodsstorage != null" >
         GoodsStorage = #{record.goodsstorage,jdbcType=INTEGER},
       </if>
+      <if test="record.goodsdetail != null" >
+        GoodsDetail = #{record.goodsdetail,jdbcType=VARCHAR},
+      </if>
       <if test="record.goodspic != null" >
         GoodsPic = #{record.goodspic,jdbcType=LONGVARBINARY},
       </if>
@@ -200,6 +212,7 @@
       GoodsName = #{record.goodsname,jdbcType=VARCHAR},
       GoodsMoney = #{record.goodsmoney,jdbcType=REAL},
       GoodsStorage = #{record.goodsstorage,jdbcType=INTEGER},
+      GoodsDetail = #{record.goodsdetail,jdbcType=VARCHAR},
       GoodsPic = #{record.goodspic,jdbcType=LONGVARBINARY}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -210,7 +223,8 @@
     set GoodsID = #{record.goodsid,jdbcType=INTEGER},
       GoodsName = #{record.goodsname,jdbcType=VARCHAR},
       GoodsMoney = #{record.goodsmoney,jdbcType=REAL},
-      GoodsStorage = #{record.goodsstorage,jdbcType=INTEGER}
+      GoodsStorage = #{record.goodsstorage,jdbcType=INTEGER},
+      GoodsDetail = #{record.goodsdetail,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -227,6 +241,9 @@
       <if test="goodsstorage != null" >
         GoodsStorage = #{goodsstorage,jdbcType=INTEGER},
       </if>
+      <if test="goodsdetail != null" >
+        GoodsDetail = #{goodsdetail,jdbcType=VARCHAR},
+      </if>
       <if test="goodspic != null" >
         GoodsPic = #{goodspic,jdbcType=LONGVARBINARY},
       </if>
@@ -238,6 +255,7 @@
     set GoodsName = #{goodsname,jdbcType=VARCHAR},
       GoodsMoney = #{goodsmoney,jdbcType=REAL},
       GoodsStorage = #{goodsstorage,jdbcType=INTEGER},
+      GoodsDetail = #{goodsdetail,jdbcType=VARCHAR},
       GoodsPic = #{goodspic,jdbcType=LONGVARBINARY}
     where GoodsID = #{goodsid,jdbcType=INTEGER}
   </update>
@@ -245,7 +263,8 @@
     update goods
     set GoodsName = #{goodsname,jdbcType=VARCHAR},
       GoodsMoney = #{goodsmoney,jdbcType=REAL},
-      GoodsStorage = #{goodsstorage,jdbcType=INTEGER}
+      GoodsStorage = #{goodsstorage,jdbcType=INTEGER},
+      GoodsDetail = #{goodsdetail,jdbcType=VARCHAR}
     where GoodsID = #{goodsid,jdbcType=INTEGER}
   </update>
 </mapper>
